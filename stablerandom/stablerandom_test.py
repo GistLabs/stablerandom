@@ -17,5 +17,8 @@ def stable():
 def nested():
     return stable(), stable(), random()
 
+def test_random_is_random():
+    assert random() != random()
+
 def test_stable_is_stable():
     assert stable() == stable()

@@ -1,7 +1,6 @@
 # Copyright (c) 2023 John Heintz, Gist Labs https://gistlabs.com
 # License Apache v2 http://www.apache.org/licenses/
-
-
+import numpy.random
 from numpy.random import Generator, PCG64
 import threading
 
@@ -18,7 +17,7 @@ class RandomLocal(threading.local):
         '''Removes the top element from the stack'''
         self.stack.pop(0)
 
-    def top(self):
+    def top(self) -> numpy.random.Generator:
         '''Lookup the top random generator, or return None'''
         if len(self.stack) > 0:
             return self.stack[-1]
@@ -45,3 +44,12 @@ def stablerandom(func):
             _randomLocalStack.pop()
 
     return wrapper
+
+_orig_triangular = numpy.random.triangular
+def stable_triangular(*args, **kwargs):
+    stable = _randomLocalStack.top()
+    if stable:
+        return stable.triangular(*args, **kwargs)
+    else:
+        return _orig_triangular(*args, **kwargs)
+numpy.random.triangular = stable_triangular
