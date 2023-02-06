@@ -45,25 +45,27 @@ def stablerandom(func):
 
     return wrapper
 
-_orig_triangular = numpy.random.triangular
-def stable_triangular(*args, **kwargs):
-    stable = _randomLocalStack.top()
-    if stable:
-        return stable.triangular(*args, **kwargs)
-    else:
-        return _orig_triangular(*args, **kwargs)
-setattr(numpy.random, 'triangular', stable_triangular)
-#numpy.random.triangular = stable_triangular
+# _orig_triangular = numpy.random.triangular
+# def stable_triangular(*args, **kwargs):
+#     stable = _randomLocalStack.top()
+#     if stable:
+#         return stable.triangular(*args, **kwargs)
+#     else:
+#         return _orig_triangular(*args, **kwargs)
+# setattr(numpy.random, 'triangular', stable_triangular)
+# #numpy.random.triangular = stable_triangular
+#
+# _orig_normal = numpy.random.normal
+# def stable_normal(*args, **kwargs):
+#     stable = _randomLocalStack.top()
+#     if stable:
+#         return stable.normal(*args, **kwargs)
+#     else:
+#         return _orig_normal(*args, **kwargs)
+# numpy.random.normal = stable_normal
 
-_orig_normal = numpy.random.normal
-def stable_normal(*args, **kwargs):
-    stable = _randomLocalStack.top()
-    if stable:
-        return stable.normal(*args, **kwargs)
-    else:
-        return _orig_normal(*args, **kwargs)
-numpy.random.normal = stable_normal
-
+#random functions to wrap for stable, from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random
+_random_functions = ('normal', 'triangular', 'pareto')
 def _wrap_numpy_random(funcName):
     _orig = getattr(numpy.random, funcName)
 
@@ -76,4 +78,5 @@ def _wrap_numpy_random(funcName):
             return _orig(*args, **kwargs)
 
     setattr(numpy.random, funcName, _stable)
-_wrap_numpy_random('pareto')
+#_wrap_numpy_random('pareto')
+[_wrap_numpy_random(f) for f in _random_functions]
