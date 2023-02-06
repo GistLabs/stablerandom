@@ -52,4 +52,28 @@ def stable_triangular(*args, **kwargs):
         return stable.triangular(*args, **kwargs)
     else:
         return _orig_triangular(*args, **kwargs)
-numpy.random.triangular = stable_triangular
+setattr(numpy.random, 'triangular', stable_triangular)
+#numpy.random.triangular = stable_triangular
+
+_orig_normal = numpy.random.normal
+def stable_normal(*args, **kwargs):
+    stable = _randomLocalStack.top()
+    if stable:
+        return stable.normal(*args, **kwargs)
+    else:
+        return _orig_normal(*args, **kwargs)
+numpy.random.normal = stable_normal
+
+def _wrap_numpy_random(funcName):
+    _orig = getattr(numpy.random, funcName)
+
+    def _stable(*args, **kwargs):
+        stable = _randomLocalStack.top()
+        if stable:
+            func = getattr(stable, funcName)
+            return func(*args, **kwargs)
+        else:
+            return _orig(*args, **kwargs)
+
+    setattr(numpy.random, funcName, _stable)
+_wrap_numpy_random('pareto')

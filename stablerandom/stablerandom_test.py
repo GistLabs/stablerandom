@@ -22,3 +22,18 @@ def test_random_is_random():
 
 def test_stable_is_stable():
     assert stable() == stable()
+
+def test_stable_normal():
+    @stablerandom
+    def stable_normal():
+        return numpy.random.normal(10, 5)
+
+    assert stable_normal() == stable_normal()
+
+def test_stable_pareto():
+    @stablerandom
+    def stable_pareto():
+        return numpy.random.pareto(10)
+
+    assert stable_pareto() == stable_pareto()
+
