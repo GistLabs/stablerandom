@@ -37,3 +37,9 @@ def test_stable_pareto():
 
     assert stable_pareto() == stable_pareto()
 
+def test_stable_uniform():
+    @stablerandom
+    def stable_uniform():
+        return numpy.random.uniform(0, 1)
+
+    assert stable_uniform() == stable_uniform()

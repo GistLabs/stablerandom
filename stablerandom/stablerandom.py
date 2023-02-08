@@ -46,8 +46,9 @@ def stablerandom(func):
     return wrapper
 
 
-#random functions to wrap for stable, from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random
-_random_functions = ('normal', 'triangular', 'pareto')
+#random functions to wrap for stable,
+# from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random
+_random_functions = ('normal', 'pareto', 'triangular', 'uniform')
 def _wrap_numpy_random(funcName):
     _orig = getattr(numpy.random, funcName)
 
