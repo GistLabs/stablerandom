@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
 
       - name: Build Package
-      - run: python3 -m pip install --upgrade build && python3 -m build
+        run: python3 -m pip install --upgrade build && python3 -m build
 
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@release/v1
