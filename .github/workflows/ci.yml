@@ -49,6 +49,7 @@ jobs:
     - name: Build
       run: |
         echo "build_version='"`git rev-list --count HEAD`-`git rev-parse --short HEAD`"'" > stablerandom/__build_version.py
+        cat stablerandom/__build_version.py
         python -m pip install --upgrade build
         python -m build
 
