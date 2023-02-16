@@ -32,7 +32,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/main'
+#    if: github.ref == 'refs/heads/main'
 
     steps:
     - uses: actions/checkout@v3
@@ -48,12 +48,11 @@ jobs:
 
     - name: Build
       run: |
-        echo git rev-list --count HEAD
-        echo git rev-parse --short HEAD > stablerandom/__build_version.py
+        echo "build_version='"`git rev-list --count HEAD`-`git rev-parse --short HEAD`"'" > stablerandom/__build_version.py
         python -m pip install --upgrade build
         python -m build
 
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_TOKEN }}
+#    - name: Publish package
+#      uses: pypa/gh-action-pypi-publish@release/v1
+#      with:
+#        password: ${{ secrets.PYPI_TOKEN }}
