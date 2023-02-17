@@ -4,7 +4,7 @@ from .stablerandom import *
 
 __version__ = "0.1"
 try:
-    import stablerandom.__build_version
-    __version__ = f'{__version__}.{stablerandom.__build_version.buildVersion}'
+    from .__build_version import build_version
+    __version__ = f'{__version__}.{build_version}'
 except ImportError:
     pass
