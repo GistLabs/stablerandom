@@ -2,5 +2,3 @@
 # License Apache v2 http://www.apache.org/licenses/
 
 from .stablerandom import *
-
-a = 1 + 2
