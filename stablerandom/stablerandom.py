@@ -6,7 +6,9 @@ import threading
 
 
 class RandomLocal(threading.local):
-    '''A threadlocal to hold a stack of stable randome generators'''
+    '''
+    A threadlocal to hold a stack of stable randome generators
+    '''
     stack = []
 
     def push(self):
@@ -25,6 +27,18 @@ class RandomLocal(threading.local):
             return None
 
 _randomLocalStack = RandomLocal()
+_globalRandomGenerator=Generator(PCG64())
+
+
+def random() -> Generator:
+    '''
+    Return a Generator,either the current stable one or else a (random) global Generator
+
+    This can be used for all cases to get random numbers, whether inside a @stablerandom or not
+    '''
+    return _randomLocalStack.top() or _globalRandomGenerator
+
+
 
 def stablerandom(func):
     """@stablerandom can be used stable random behavior for a function and call stack

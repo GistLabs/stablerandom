@@ -3,10 +3,11 @@
 
 import numpy.random
 import pytest
-from stablerandom import stablerandom
+from stablerandom import stablerandom, random
 from stablerandom.stablerandom import _randomLocalStack
+from stablerandom.stablerandom import _globalRandomGenerator
 
-def random():
+def random_triangular():
     return numpy.random.triangular(1,5,10)
 
 @stablerandom
@@ -15,10 +16,10 @@ def stable():
 
 @stablerandom
 def nested():
-    return stable(), stable(), random()
+    return stable(), stable(), random_triangular()
 
 def test_random_is_random():
-    assert random() != random()
+    assert random_triangular() != random_triangular()
 
 def test_stable_is_stable():
     assert stable() == stable()
@@ -43,3 +44,12 @@ def test_stable_uniform():
         return numpy.random.uniform(0, 1)
 
     assert stable_uniform() == stable_uniform()
+
+def test_global():
+    assert random() == _globalRandomGenerator
+
+    @stablerandom
+    def stableIsNotGlobal():
+        assert _globalRandomGenerator != random()
+        assert random() == _randomLocalStack.top()
+    stableIsNotGlobal()
