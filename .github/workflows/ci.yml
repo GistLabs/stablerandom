@@ -5,6 +5,8 @@ name: Python package
 
 on: [push, pull_request]
 
+permissions: write-all
+
 jobs:
   test:
 
@@ -74,6 +76,21 @@ jobs:
     - name: Build
       run: |
         poetry build
+
+    - name: Create tag
+      run: |
+        git tag v`poetry version -s`
+        git push origin v`poetry version -s`
+
+    #- name: Create tag
+    #  run: |
+    #    git config --global user.email "omagwugabriel92@gmail.com"
+    #    git config --global user.name "gomagwu"
+    #    git tag v`poetry version -s`
+    #    git commit -a -m "build tag"
+    #    git push
+    #    git push origin v`poetry version -s`
+
     - name: Publish
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
