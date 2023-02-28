@@ -115,6 +115,9 @@ srand/
 .spyderproject
 .spyproject
 
+# IDEA project settings
+.idea/workspace.xml
+
 # Rope project settings
 .ropeproject
 
