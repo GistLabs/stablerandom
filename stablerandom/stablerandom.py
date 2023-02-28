@@ -49,7 +49,7 @@ def random() -> Generator:
 
 def stablerandom(func):
     """A decorator indicating stable random
-    @stablerandom can be used stable random behavior for a function and call stack
+    @stablerandom provides stable random behavior for a function and call stack
 
     Usage:
         @stable_random
@@ -57,13 +57,12 @@ def stablerandom(func):
             ...
     """
     def wrapper(*args, **kwargs):
-        _randomLocalStack.push()
+        _randomLocalStack.push() # push a new stable random Generator on to the stack
 
         try:
-            return func(*args, **kwargs)
+            return func(*args, **kwargs) # call the function and this might make random().function calls
         finally:
-            # clear thread local
-            _randomLocalStack.pop()
+            _randomLocalStack.pop() # clear thread local
 
     return wrapper
 
