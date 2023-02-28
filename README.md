@@ -39,7 +39,7 @@ from `git rev-list --count HEAD`.
 
 We recommend picking a version like:
 
-`stablerandom = "^0.3"`
+`stablerandom = "^0.5"`
 
 ## Dependencies
 This library has been tested with [NumPy](https://www.numpy.org) back to version 1.22
