@@ -2,7 +2,10 @@
 name = "stablerandom"
 version = "0.5"
 description = "Create stable/repeatable numpy.random applications"
-authors = ["John Heintz <john@gistlabs.com>"]
+authors = [
+    "John Heintz <john@gistlabs.com>",
+    "Gabriel Omagwu <omagwugabriel92@gmail.com>",
+    ]
 readme = "README.md"
 
 [tool.poetry.dependencies]
