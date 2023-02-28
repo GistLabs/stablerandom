@@ -72,7 +72,9 @@ def stablerandom(func):
 # from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random
 
 
-_random_functions = ('normal', 'pareto', 'triangular', 'uniform')
+_random_functions = [x for x in dir(numpy.random) if not x.startswith('_')]
+_random_dictionary = {'randint': 'integers', 'random_integers': 'integers',
+                      'sample': 'random', 'ranf': 'random', 'random_sample': 'random'}
 
 
 def _wrap_numpy_random(funcName):
@@ -81,7 +83,13 @@ def _wrap_numpy_random(funcName):
     def _stable(*args, **kwargs):
         stable = _randomLocalStack.top()
         if stable:
-            func = getattr(stable, funcName)
+            try:
+                func = getattr(stable, funcName)
+            except AttributeError:
+                try:
+                    func = getattr(stable, _random_dictionary[funcName])
+                except (KeyError, AttributeError):
+                    func = _orig
             return func(*args, **kwargs)
         else:
             return _orig(*args, **kwargs)
@@ -90,3 +98,6 @@ def _wrap_numpy_random(funcName):
 
 
 [_wrap_numpy_random(f) for f in _random_functions]
+
+
+

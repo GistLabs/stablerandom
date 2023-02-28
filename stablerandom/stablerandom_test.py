@@ -62,3 +62,19 @@ def test_global():
         assert _globalRandomGenerator != random()
         assert random() == _randomLocalStack.top()
     stableIsNotGlobal()
+
+
+def test_stable_randint():
+    @stablerandom
+    def stable_randint():
+        return numpy.random.randint(8, size=1)
+
+    assert stable_randint() == stable_randint()
+
+
+def test_stable_ranf():
+    @stablerandom
+    def stable_ranf():
+        return numpy.random.ranf(1)
+
+    assert stable_ranf() == stable_ranf()
