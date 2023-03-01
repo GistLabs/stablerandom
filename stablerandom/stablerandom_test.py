@@ -78,3 +78,34 @@ def test_stable_ranf():
         return numpy.random.ranf(1)
 
     assert stable_ranf() == stable_ranf()
+
+
+def test_random_dictionary():
+    @stablerandom
+    def stable_random_sample():
+        return numpy.random.random_sample(1)
+
+    @stablerandom
+    def stable_sample():
+        return numpy.random.sample(1)
+
+    @stablerandom
+    def stable_random_integers():
+        return numpy.random.random_integers(1)
+
+    assert stable_random_sample() == stable_random_sample()
+    assert stable_sample() == stable_sample()
+    assert stable_random_integers() == stable_random_integers()
+
+
+def test_not_wrapped():
+    @stablerandom
+    def not_wrapped_randn():
+        return numpy.random.randn(1)
+
+    @stablerandom
+    def not_wrapped_rand():
+        return numpy.random.rand(1)
+
+    assert not_wrapped_randn() != not_wrapped_randn()
+    assert not_wrapped_rand() != not_wrapped_rand()

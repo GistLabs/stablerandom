@@ -71,7 +71,10 @@ def stablerandom(func):
 # from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random
 
 
+# List of all available numpy.random functions
 _random_functions = [x for x in dir(numpy.random) if not x.startswith('_')]
+
+# Dictionary Mapping numpy.random functions to their equivalents available on the Generator
 _random_dictionary = {'randint': 'integers', 'random_integers': 'integers',
                       'sample': 'random', 'ranf': 'random', 'random_sample': 'random'}
 
@@ -83,12 +86,16 @@ def _wrap_numpy_random(funcName):
         stable = _randomLocalStack.top()
         if stable:
             try:
+                # Get the attribute of the function name from the Generator
                 func = getattr(stable, funcName)
             except AttributeError:
+                # The Generator does not possess requested function name
                 try:
+                    # Get the function equivalent available on the Generator from `_random_dictionary`
                     func = getattr(stable, _random_dictionary[funcName])
                 except (KeyError, AttributeError):
-                    func = _orig
+                    # The Generator does not possess an equivalent of the function
+                    func = _orig  # Return the original function from numpy.random
             return func(*args, **kwargs)
         else:
             return _orig(*args, **kwargs)
@@ -97,6 +104,3 @@ def _wrap_numpy_random(funcName):
 
 
 [_wrap_numpy_random(f) for f in _random_functions]
-
-
-
