@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stablerandom"
-version = "0.5"
+version = "0.6"
 description = "Create stable/repeatable numpy.random applications"
 authors = [
     "John Heintz <john@gistlabs.com>",
