@@ -13,8 +13,14 @@ class RandomLocal(threading.local):
     stack = []
 
     def push(self):
-        """Push a new Generator PCG64 SeedSequence to the stack"""
-        self.stack.append(Generator(PCG64(123456789)))
+        """Push a new Generator PCG64 SeedSequence to the stack
+
+        What’s better decimal jokes or integer ones?
+        Decimal jokes. Integer jokes just don’t have any point.
+        https://upjoke.com/integer-jokes
+
+        The largest prime number with 9 digits is 999999937"""
+        self.stack.append(Generator(PCG64(999999937)))
 
     def pop(self):
         """Removes the top element from the stack"""

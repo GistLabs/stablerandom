@@ -21,9 +21,9 @@ def random_triangular(samples):
     return numpy.random.triangular(1, 5, 10, samples)
 
 print(random_triangular(3))
->>> [1.99882862 7.95097645 7.68974243]
+>>> [5.1017943  2.64970963 8.6996913 ]
 print(random_triangular(3))
->>> [1.99882862 7.95097645 7.68974243]
+>>> [5.1017943  2.64970963 8.6996913 ]
 ```
 
 ## Example context
@@ -35,12 +35,12 @@ from stablerandom import stablerandom
 with stablerandom:
     print(numpy.random.triangular(1, 5, 10, 3))
     print(numpy.random.triangular(1, 5, 10, 3))
->>> [1.99882862 7.95097645 7.68974243]
->>> [5.89151821 6.93115111 7.20104674]
+>>> [5.1017943  2.64970963 8.6996913 ]
+>>> [3.30538708 2.39427919 3.57653224]
 
 with stablerandom:
     print(numpy.random.triangular(1, 5, 10, 3))
->>> [1.99882862 7.95097645 7.68974243]
+>>> [5.1017943  2.64970963 8.6996913 ]
 ```
 
 ## Installing
