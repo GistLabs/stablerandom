@@ -3,6 +3,7 @@
 import numpy.random
 from numpy.random import Generator, PCG64
 import threading
+from contextlib import ContextDecorator
 
 
 class RandomLocal(threading.local):
@@ -46,26 +47,28 @@ def random() -> Generator:
     """
     return _randomLocalStack.top() or _globalRandomGenerator
 
-
-def stablerandom(func):
+class StableRandom(ContextDecorator):
     """A decorator indicating stable random
     @stablerandom provides stable random behavior for a function and call stack
 
     Usage:
-        @stable_random
+        @stablerandom
         def my_method():
             ...
+
+    A context indicating stable random
+    Usage:
+        with stablerandom:
+            ...
     """
-    def wrapper(*args, **kwargs):
-        _randomLocalStack.push() # push a new stable random Generator on to the stack
+    def __enter__(self):
+        _randomLocalStack.push()
+        return self
 
-        try:
-            return func(*args, **kwargs) # call the function and this might make random().function calls
-        finally:
-            _randomLocalStack.pop() # clear thread local
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        _randomLocalStack.pop()
 
-    return wrapper
-
+stablerandom = StableRandom()
 
 # random functions to wrap for stable,
 # from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random

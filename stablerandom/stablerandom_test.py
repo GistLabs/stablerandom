@@ -63,6 +63,26 @@ def test_global():
         assert random() == _randomLocalStack.top()
     stableIsNotGlobal()
 
+def test_context_global():
+    with stablerandom:
+        assert _globalRandomGenerator != random()
+        assert random() == _randomLocalStack.top()
+
+def test_decorator_equals_context():
+    s = stable()
+
+    with stablerandom:
+        assert s == numpy.random.triangular(1, 5, 10)
+
+def test_nested_context():
+    with stablerandom:
+        a = numpy.random.triangular(1, 5, 10)
+        b = numpy.random.triangular(1, 5, 10)
+        assert a != b
+
+        with stablerandom:
+            c = numpy.random.triangular(1, 5, 10)
+            assert a == c
 
 def test_stable_randint():
     @stablerandom

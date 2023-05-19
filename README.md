@@ -6,13 +6,13 @@ platforms and Python environments, ensuring reproducibility
 in scientific computing, machine learning, and unit testing.
 
 stablerandom can decorate any function or method and provide a 
-call-stack scoped seeded random generator. It is thread safe and 
-supports nested scopes.
+call-stack scoped seeded random generator. stablerandom can also be used
+as a Context. It is thread safe and supports nested scopes.
 
-## Example
+## Example decorator
 Using the `@stablerandom` decorator to get a stable output for numpy.random.triangular
 
- ```
+ ```python
 import numpy.random
 from stablerandom import stablerandom
 
@@ -23,6 +23,23 @@ def random_triangular(samples):
 print(random_triangular(3))
 >>> [1.99882862 7.95097645 7.68974243]
 print(random_triangular(3))
+>>> [1.99882862 7.95097645 7.68974243]
+```
+
+## Example context
+Using the `with stablerandom` context to get a stable output:
+```python
+import numpy.random
+from stablerandom import stablerandom
+
+with stablerandom:
+    print(numpy.random.triangular(1, 5, 10, 3))
+    print(numpy.random.triangular(1, 5, 10, 3))
+>>> [1.99882862 7.95097645 7.68974243]
+>>> [5.89151821 6.93115111 7.20104674]
+
+with stablerandom:
+    print(numpy.random.triangular(1, 5, 10, 3))
 >>> [1.99882862 7.95097645 7.68974243]
 ```
 
