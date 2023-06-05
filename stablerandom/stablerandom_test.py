@@ -129,3 +129,8 @@ def test_not_wrapped():
 
     assert not_wrapped_randn() != not_wrapped_randn()
     assert not_wrapped_rand() != not_wrapped_rand()
+
+
+def test_mtrand_rand():
+    # should quietly work
+    assert numpy.random.mtrand._rand

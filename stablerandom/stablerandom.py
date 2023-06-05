@@ -78,10 +78,20 @@ stablerandom = StableRandom()
 
 # random functions to wrap for stable,
 # from https://numpy.org/doc/stable/reference/random/legacy.html#functions-in-numpy-random
-
+_random_functions = (
+    'rand', 'randn', 'randint', 'random_integers', 'random_sample', 'choice', 'bytes',
+    'shuffle', 'permutation',
+    'beta', 'binomial', 'chisquare', 'dirichlet', 'exponential', 'f', 'gamma', 'geometric', 'gumbel',
+    'hypergeometric', 'laplace', 'logistic', 'lognormal', 'logseries', 'multinomial', 'multivariate_normal',
+    'negative_binomial', 'noncentral_chisquare', 'noncentral_f', 'normal', 'pareto', 'poisson', 'power',
+    'rayleigh', 'standard_cauchy', 'standard_exponential', 'standard_gamma', 'standard_normal',
+    'triangular', 'uniform', 'vonmises', 'wald', 'weibull', 'zipf',
+    'ranf', 'sample'
+)
 
 # List of all available numpy.random functions
-_random_functions = [x for x in dir(numpy.random) if not x.startswith('_')]
+#_omit_functions = ('mtrand')
+#_random_functions = [x for x in dir(numpy.random) if (not x.startswith('_') and not x in _omit_functions)]
 
 # Dictionary Mapping numpy.random functions to their equivalents available on the Generator
 _random_dictionary = {'randint': 'integers', 'random_integers': 'integers',
