@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stablerandom"
-version = "0.6"
+version = "0.10"
 description = "Create stable/repeatable numpy.random applications"
 authors = [
     "John Heintz <john@gistlabs.com>",
@@ -9,11 +9,11 @@ authors = [
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8"
-numpy = "^1.20"
+python = "^3.10"
+numpy = "^2.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.4"
+pytest = "^7.1.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
